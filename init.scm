@@ -1,3 +1,51 @@
+;length
+(define (length l)
+	(cond ((null? l) 0)
+		((+ 1 (length (cdr l))))))
+;append
+(define (append l1 l2)
+	(cond ((null? l1) l2)
+		((cons (car l1)
+			(append (cdr l1) l2)))))
+;reverse
+(define (reverse l)
+  (if (null? l) '()
+     (append (reverse (cdr l)) (list (car l)))))
+;memq
+(define (memq n l)
+  (if (null? l) #f
+      (cond ((or (eq? n (car l)) (member n (cdr l))) l)
+            (else #f))))
+;memv
+(define (memv n l)
+  (if (null? l) #f
+      (cond ((or (eqv? n (car l)) (member n (cdr l))) l)
+            (else #f))))
+;member
+(define (member n l)
+  (if (null? l) #f
+      (cond ((or (equal? n (car l)) (member n (cdr l))) l)
+            (else #f))))
+;assq
+(define (assq n l)
+  (if (null? l) #f
+      (cond ((not (pair? (car l)) ) #f)
+            ((and (eq? n (car l)) (assq n (cdr l))) (car l))
+            (else #f))))
+;assv
+(define (assv n l)
+  (if (null? l) #f
+      (cond ((not (pair? (car l)) ) #f)
+            ((and (eqv? n (car l)) (assv n (cdr l))) (car l))
+            (else #f))))
+;assoc
+(define (assoc n l)
+  (if (null? l) #f
+      (cond ((not (equal? (car l)) ) #f)
+            ((and (equal? n (car l)) (assoc n (cdr l))) (car l))
+            (else #f))))
+
+;nodes
 (define (caar l) (car (car l)))
 
 (define (cadr l) (car (cdr l)))
