@@ -33,46 +33,46 @@
 ;reverse
 (define (reverse l)
   (if (null? l) '()
-     (append (reverse (cdr l)) (list (car l)))))
+    (append (reverse (cdr l)) (list (car l)))))
 
 ;memq
 (define (memq x l)
   (if (null? l) #f
-      (cond ((or (eq? x (car l)) (member x (cdr l))) l)
-            (else #f))))
+    (cond ((or (eq? x (car l)) (member x (cdr l))) l)
+  (else #f))))
 
 ;memv
 (define (memv x l)
   (if (null? l) #f
-      (cond ((or (eqv? x (car l)) (member x (cdr l))) l)
-            (else #f))))
+    (cond ((or (eqv? x (car l)) (member x (cdr l))) l)
+  (else #f))))
 
 ;member
 (define (member x l)
   (if (null? l) #f
-      (cond ((or (equal? x (car l)) (member x (cdr l))) l)
-            (else #f))))
+    (cond ((or (equal? x (car l)) (member x (cdr l))) l)
+  (else #f))))
 
 ;assq
 (define (assq x l)
   (if (null? l) #f
-      (cond ((not (pair? (car l)) ) #f)
-            ((and (eq? x (car l)) (assq x (cdr l))) (car l))
-            (else #f))))
+    (cond ((not (pair? (car l)) ) #f)
+    ((and (eq? x (car l)) (assq x (cdr l))) (car l))
+    (else #f))))
 
 ;assv
 (define (assv x l)
   (if (null? l) #f
-      (cond ((not (pair? (car l)) ) #f)
-            ((and (eqv? x (car l)) (assv x (cdr l))) (car l))
-            (else #f))))
+    (cond ((not (pair? (car l)) ) #f)
+      ((and (eqv? x (car l)) (assv x (cdr l))) (car l))
+      (else #f))))
 
 ;assoc
 (define (assoc x l)
   (if (null? l) #f
-      (cond ((not (equal? (car l)) ) #f)
-            ((and (equal? x (car l)) (assoc x (cdr l))) (car l))
-            (else #f))))
+    (cond ((not (equal? (car l)) ) #f)
+      ((and (equal? x (car l)) (assoc x (cdr l))) (car l))
+      (else #f))))
 
 ;map
 (define (map x l)
@@ -91,20 +91,20 @@
 ;zero?
 (define (zero? x)
   (cond ((null? x) #f)
-        ((= x 0) #t)
-        (else #f)))
+    ((= x 0) #t)
+    (else #f)))
 
 ;positive?
 (define (positive? x)
   (cond ((null? x) #f)
-        ((> x 0) #t)
-        (else #f)))
+    ((> x 0) #t)
+    (else #f)))
 
 ;negative?
 (define (negative? x)
   (cond ((null? x) #f)
-        ((< x 0) #t)
-        (else #f)))
+    ((< x 0) #t)
+    (else #f)))
 
 ;abs
 (define (abs x)
@@ -124,28 +124,28 @@
 ;max
 (define (max . l)
   (if (> (car l) (car (cdr l))) (car l)
-      (max (cdr l))))
+    (max (cdr l))))
 
 ;min
 (define (min n)
   (cond ((null? (cdr n) (car n))
-         ((< (car n) (min (cdr n))) (car n))
-         (else (min (cdr n))))))
+    ((< (car n) (min (cdr n))) (car n))
+    (else (min (cdr n))))))
 
 ;+
 (define (+ . l)
   (if (null? l) 0
-      (b+ (car l) (apply + (cdr l)))))
+    (b+ (car l) (apply + (cdr l)))))
 
 ;-
 (define (- . l)
   (if (null? l) 0
-      (b- (car l) (apply - (cdr l)))))
+    (b- (car l) (apply - (cdr l)))))
 
 ;*
 (define (* . l)
   (if (null? l) 0
-      (b* (car l) (apply * (cdr l)))))
+    (b* (car l) (apply * (cdr l)))))
 
 ;eqv? 
 (define (eqv? x y)
@@ -160,39 +160,39 @@
 ;=
 (define (= . l)
   (if (null? l) 0
-      (cond 
-        ((zero? (- (car l) (car (cdr l)))))
-        (else #f))))
+    (cond 
+      ((zero? (- (car l) (car (cdr l)))))
+      (else #f))))
 
 ;<
 (define (< . l)  
   (if (null? l) 0
-      (cond
-        ((negative? (- (car l) (car (cdr l)))))
-        (else #f))))
+    (cond
+      ((negative? (- (car l) (car (cdr l)))))
+      (else #f))))
 
 ;>
 (define (> . l)
   (if (null? l) 0
-      (cond
-        ((positive? (- (car l) (car (cdr l)))))
-        (else #f))))
+    (cond
+      ((positive? (- (car l) (car (cdr l)))))
+      (else #f))))
 
 ;<=
 (define (<= . l)
   (if (null? l) 0
-      (cond
-        ((zero? (- (car l) (car (cdr l)))))
-        ((negative? (- (car l) (car (cdr l)))))
-        (else #f))))
+    (cond
+      ((zero? (- (car l) (car (cdr l)))))
+      ((negative? (- (car l) (car (cdr l)))))
+      (else #f))))
 
 ;>=
 (define (>= . l)
   (if (null? l) 0
-      (cond
-        ((zero? (- (car l) (car (cdr l)))))
-        ((positive? (- (car l) (car (cdr l)))))
-        (else #f))))
+    (cond
+      ((zero? (- (car l) (car (cdr l)))))
+      ((positive? (- (car l) (car (cdr l)))))
+      (else #f))))
 
 ;list functions
 (define (caar l) (car (car l)))
