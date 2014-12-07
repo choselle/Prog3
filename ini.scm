@@ -80,7 +80,7 @@
     (cons (x (car l))
       (map x (cdr l)))))
 
-;; for-each
+;for-each
 (define (for-each x l)
   (cond ((null? (cdr l))
     (x (car l)))
@@ -114,7 +114,7 @@
 
 ;odd?
 (define (odd? x) 
-  ((cond ((= x 0) #t) ((= x 1) #f) 
+  ((cond ((= x 0) #f) ((= x 1) #t) 
       (else (odd? (abs (- 2 x)))))))
 
 ;even?
@@ -124,12 +124,13 @@
 ;max
 (define (max . l)
   (if (> (car l) (car (cdr l))) (car l)
-      (apply max (cdr l))))
+      (max (cdr l))))
 
 ;min
-(define (min . l)
-  (if (< (car l) (car (cdr l))) (car l)
-      (apply min (cdr l))))
+(define (min n)
+  (cond ((null? (cdr n) (car n))
+         ((< (car n) (min (cdr n))) (car n))
+         (else (min (cdr n))))))
 
 ;+
 (define (+ . l)
