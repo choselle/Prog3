@@ -1,12 +1,29 @@
+;Chase Hoselle
+;Prog 3
+
 ;length
 (define (length l)
 	(cond ((null? l) 0)
 		((+ 1 (length (cdr l))))))
+;list
+(define (list . l)
+  (cond (null? l) '()
+  1))
 ;append
 (define (append l1 l2)
 	(cond ((null? l1) l2)
 		((cons (car l1)
 			(append (cdr l1) l2)))))
+;not
+(define (not n)
+  (if n #f #t))
+;and
+(define (and . l)
+  (if (null? (cdr l)) (car l) 
+    (if (eq? (car l) #f) #f (apply and (cdr l)))))
+;or
+(define (or . l) (if (eq? (car l) #f) (apply or (cdr l)) (car l)))
+
 ;reverse
 (define (reverse l)
   (if (null? l) '()
@@ -44,8 +61,99 @@
       (cond ((not (equal? (car l)) ) #f)
             ((and (equal? n (car l)) (assoc n (cdr l))) (car l))
             (else #f))))
+;map
+(define (map n l)
+  (cond ((null? l) '())
+    (cons (n (car l))
+      (map n (cdr l)))))
+;zero?
+(define (zero? n)
+  (cond ((null? n) #f)
+        ((= n 0) #t)
+        (else #f)))
+;positive?
+(define (pos? n)
+  (cond ((null? n) #f)
+        ((> n 0) #t)
+        (else #f)))
+;negative?
+(define (neg? n)
+  (cond ((null? n) #f)
+        ((< n 0) #t)
+        (else #f)))
+;odd?
+(define (odd? n)
+  (if (eqv? n 0) #f
+      (even? (- n 1))))
+;even?
+(define (even? n)
+  (if (eqv? n 0) #t
+      (odd? (- n 1))))
+;max
+(define (max . l)
+  (if (> (car l) (car (cdr l))) (car l)
+      (max (cdr l))))
+;min
+(define (min n)
+  (cond ((null? (cdr n) (car n))
+         ((< (car n) (min (cdr n))) (car n))
+         (else (min (cdr n))))))
+;+
+(define (+ . l)
+  (if (null? l) 0
+      (b+ (car l) (apply + (cdr l)))))
+;-
+(define (- . l)
+  (if (null? l) 0
+      (b- (car l) (apply - (cdr l)))))
+;*
+(define (* . l)
+  (if (null? l) 0
+      (b* (car l) (apply * (cdr l)))))
+;eqv? 
+(define (eqv? x y)
+  (if (and (number? x) (number? y)) (= x y) (eq? x y)))  
+    
+;equal?
+(define (equal? x y)
+  (cond ((eqv? x y) #t)
+    ((and (pair? x) (pair? y) (equal? (car x) (car y)) (equal? (cdr x) (cdr y))) #t)
+    (else #f)))
 
-;nodes
+;=
+(define (= . l)
+  (if (null? l) 0
+      (cond 
+        ((zero? (- (car l) (car (cdr l)))))
+        (else #f))))
+;<
+(define (< . l)  
+  (if (null? l) 0
+      (cond
+        ((negative? (- (car l) (car (cdr l)))))
+        (else #f))))
+;>
+(define (> . l)
+  (if (null? l) 0
+      (cond
+        ((positive? (- (car l) (car (cdr l)))))
+        (else #f))))
+;<=
+(define (<= . l)
+  (if (null? l) 0
+      (cond
+        ((zero? (- (car l) (car (cdr l)))))
+        ((negative? (- (car l) (car (cdr l)))))
+        (else #f))))
+;>=
+(define (>= . l)
+  (if (null? l) 0
+      (cond
+        ((zero? (- (car l) (car (cdr l)))))
+        ((positive? (- (car l) (car (cdr l)))))
+        (else #f))))
+
+;list functions
 (define (caar l) (car (car l)))
 
 (define (cadr l) (car (cdr l)))
