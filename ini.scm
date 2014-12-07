@@ -5,109 +5,147 @@
 (define (length l)
 	(cond ((null? l) 0)
 		((+ 1 (length (cdr l))))))
+
 ;list
 (define (list . l)
-  (cond (null? l) '()
-  1))
+  (if (null? l) '()
+  l))
+
 ;append
 (define (append l1 l2)
 	(cond ((null? l1) l2)
 		((cons (car l1)
 			(append (cdr l1) l2)))))
+
 ;not
-(define (not n)
-  (if n #f #t))
+(define (not x)
+  (if x #f #t))
+
 ;and
 (define (and . l)
   (if (null? (cdr l)) (car l) 
     (if (eq? (car l) #f) #f (apply and (cdr l)))))
+
 ;or
-(define (or . l) (if (eq? (car l) #f) (apply or (cdr l)) (car l)))
+(define (or . l) 
+  (if (eq? (car l) #f) (apply or (cdr l)) (car l)))
+
 ;reverse
 (define (reverse l)
   (if (null? l) '()
      (append (reverse (cdr l)) (list (car l)))))
+
 ;memq
-(define (memq n l)
+(define (memq x l)
   (if (null? l) #f
-      (cond ((or (eq? n (car l)) (member n (cdr l))) l)
+      (cond ((or (eq? x (car l)) (member x (cdr l))) l)
             (else #f))))
+
 ;memv
-(define (memv n l)
+(define (memv x l)
   (if (null? l) #f
-      (cond ((or (eqv? n (car l)) (member n (cdr l))) l)
+      (cond ((or (eqv? x (car l)) (member x (cdr l))) l)
             (else #f))))
+
 ;member
-(define (member n l)
+(define (member x l)
   (if (null? l) #f
-      (cond ((or (equal? n (car l)) (member n (cdr l))) l)
+      (cond ((or (equal? x (car l)) (member x (cdr l))) l)
             (else #f))))
+
 ;assq
-(define (assq n l)
+(define (assq x l)
   (if (null? l) #f
       (cond ((not (pair? (car l)) ) #f)
-            ((and (eq? n (car l)) (assq n (cdr l))) (car l))
+            ((and (eq? x (car l)) (assq x (cdr l))) (car l))
             (else #f))))
+
 ;assv
-(define (assv n l)
+(define (assv x l)
   (if (null? l) #f
       (cond ((not (pair? (car l)) ) #f)
-            ((and (eqv? n (car l)) (assv n (cdr l))) (car l))
+            ((and (eqv? x (car l)) (assv x (cdr l))) (car l))
             (else #f))))
+
 ;assoc
-(define (assoc n l)
+(define (assoc x l)
   (if (null? l) #f
       (cond ((not (equal? (car l)) ) #f)
-            ((and (equal? n (car l)) (assoc n (cdr l))) (car l))
+            ((and (equal? x (car l)) (assoc x (cdr l))) (car l))
             (else #f))))
+
 ;map
-(define (map n l)
+(define (map x l)
   (cond ((null? l) '())
-    (cons (n (car l))
-      (map n (cdr l)))))
+    (cons (x (car l))
+      (map x (cdr l)))))
+
+;; for-each
+(define (for-each x l)
+  (cond ((null? (cdr l))
+    (x (car l)))
+  (else
+    (x (car l))
+    (for-each x (cdr l)))))
+
 ;zero?
-(define (zero? n)
-  (cond ((null? n) #f)
-        ((= n 0) #t)
+(define (zero? x)
+  (cond ((null? x) #f)
+        ((= x 0) #t)
         (else #f)))
+
 ;positive?
-(define (pos? n)
-  (cond ((null? n) #f)
-        ((> n 0) #t)
+(define (positive? x)
+  (cond ((null? x) #f)
+        ((> x 0) #t)
         (else #f)))
+
 ;negative?
-(define (neg? n)
-  (cond ((null? n) #f)
-        ((< n 0) #t)
+(define (negative? x)
+  (cond ((null? x) #f)
+        ((< x 0) #t)
         (else #f)))
+
+;abs
+(define (abs x)
+  (cond ((> x 0) x)
+    ((= x 0) 0)
+    ((< x 0) (- x))))
+
 ;odd?
 (define (odd? x) 
-  (cond ((= x 0) #t) ((= x 1) #f) 
-    (else (odd? (abs (- 2 x))))))
+  ((cond ((= x 0) #t) ((= x 1) #f) 
+      (else (odd? (abs (- 2 x)))))))
+
 ;even?
 (define (even? x) 
   (not (odd? x)))
+
 ;max
 (define (max . l)
   (if (> (car l) (car (cdr l))) (car l)
-      (max (cdr l))))
+      (apply max (cdr l))))
+
 ;min
-(define (min n)
-  (cond ((null? (cdr n) (car n))
-         ((< (car n) (min (cdr n))) (car n))
-         (else (min (cdr n))))))
+(define (min . l)
+  (if (< (car l) (car (cdr l))) (car l)
+      (apply min (cdr l))))
+
 ;+
 (define (+ . l)
   (if (null? l) 0
       (b+ (car l) (apply + (cdr l)))))
+
 ;-
 (define (- . l)
   (if (null? l) 0
       (b- (car l) (apply - (cdr l)))))
+
 ;*
 (define (* . l)
   (if (null? l) 0
       (b* (car l) (apply * (cdr l)))))
+
 ;eqv? 
 (define (eqv? x y)
   (if (and (number? x) (number? y)) (= x y) (eq? x y)))  
@@ -117,30 +155,44 @@
   (cond ((eqv? x y) #t)
     ((and (pair? x) (pair? y) (equal? (car x) (car y)) (equal? (cdr x) (cdr y))) #t)
     (else #f)))
+
 ;=
 (define (= . l)
   (if (null? l) 0
-    (b= (car l) (apply = (cdr l)))))
+      (cond 
+        ((zero? (- (car l) (car (cdr l)))))
+        (else #f))))
+
+;<
+(define (< . l)  
+  (if (null? l) 0
+      (cond
+        ((negative? (- (car l) (car (cdr l)))))
+        (else #f))))
 
 ;>
 (define (> . l)
   (if (null? l) 0
-    (b> (car l) (apply > (cdr l)))))
-
-;<
-(define (< . l)
-  (if (null? l) 0
-    (b< (car l) (apply < (cdr l)))))
-
-;>=
-(define (>= . l)
-  (if (null? l) 0
-    (b>= (car l) (apply >= (cdr l)))))
+      (cond
+        ((positive? (- (car l) (car (cdr l)))))
+        (else #f))))
 
 ;<=
 (define (<= . l)
   (if (null? l) 0
-    (b<= (car l) (apply <= (cdr l)))))
+      (cond
+        ((zero? (- (car l) (car (cdr l)))))
+        ((negative? (- (car l) (car (cdr l)))))
+        (else #f))))
+
+;>=
+(define (>= . l)
+  (if (null? l) 0
+      (cond
+        ((zero? (- (car l) (car (cdr l)))))
+        ((positive? (- (car l) (car (cdr l)))))
+        (else #f))))
+
 ;list functions
 (define (caar l) (car (car l)))
 (define (cadr l) (car (cdr l)))
